@@ -3,54 +3,53 @@ const express = require('express');
 const router = express.Router();
 
 // solution 1
-
-let players = [
+let persons = [
     {
-        "name": "manish",
-        "dob": "1/1/1995",
-        "gender": "male",
-        "city": "jalandhar",
-        "sports": [
-            "swimming"
-        ]
+        name: "PK",
+        age: 10,
+        votingStatus: false
     },
     {
-        "name": "gopal",
-        "dob": "1/09/1995",
-        "gender": "male",
-        "city": "delhi",
-        "sports": [
-            "soccer"
-        ]
+        name: "SK",
+        age: 20,
+        votingStatus: false
     },
     {
-        "name": "lokesh",
-        "dob": "1/1/1990",
-        "gender": "male",
-        "city": "mumbai",
-        "sports": [
-            "soccer"
-        ]
+        name: "AA",
+        age: 70,
+        votingStatus: false
     },
-]
-router.post('/players', function (req, res) {
-    let abc = req.body.element
-
-    for (i of players) {
-        if (i.name == abc.name) {
-            return res.send({ msg: "name already exit of this player" })
-
-        }
+    {
+        name: "SC",
+        age: 5,
+        votingStatus: false
+    },
+    {
+        name: "HO",
+        age: 40,
+        votingStatus: false
     }
-    players.push(players)
-    console.log(players)
-    re.send({ msg: players, status: true })
+]
 
-
-
-
-    // res.send(  { data: players , status: true }  )
+router.post('/person', function (req, res) {
+    const votingAge = req.query.votingAge //accessing the deta"voting age" quary parm
+    const votingStatus = []
+    persons.forEach((person) => {
+        if (person.age >= votingAge) {
+            person.votingStatus = true
+            votingStatus.push(person)
+        }
+    })
+     return res.send({ votingStatus: votingStatus })
 })
+   
+
+
+
+
+
+
+
 
 module.exports = router;
 
