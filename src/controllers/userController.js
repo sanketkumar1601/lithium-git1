@@ -34,7 +34,7 @@ const loginUser = async function (req, res) {
       batch: "thorium",
       organisation: "FUnctionUp",
     },
-    "functionup-thorium"
+    "functionup-lithium-very-important-key" 
   );
   res.setHeader("x-auth-token", token);
   res.send({ status: true, data: token });
@@ -54,7 +54,7 @@ const getUserData = async function (req, res) {
   // Input 1 is the token to be decoded
   // Input 2 is the same secret with which the token was generated
   // Check the value of the decoded token yourself
-  let decodedToken = jwt.verify(token, "functionup-thorium");
+  let decodedToken = jwt.verify(token, "functionup-lithium-very-important-key");
   if (!decodedToken)
     return res.send({ status: false, msg: "token is invalid" });
 
@@ -76,7 +76,7 @@ const updateUser = async function (req, res) {
   let user = await userModel.findById(userId);
   //Return an error if no user with the given id exists in the db
   if (!user) {
-    return res.send("No such user exists");
+    return res.send({status:false,msg:"No such user exists"});
   }
 
   let userData = req.body;
@@ -107,12 +107,14 @@ const postMessage = async function (req, res) {
     if(!user) return res.send({status: false, msg: 'No such user exists'})
     
     let updatedPosts = user.posts
-    //add the message to user's posts
+    //add the message to user's posts //also for is deleted                                         //down//
     updatedPosts.push(message)
-    let updatedUser = await userModel.findOneAndUpdate({_id: user._id},{posts: updatedPosts}, {new: true})
+    let updatedUser = await userModel.findOneAndUpdate({_id: user._id},{posts: updatedPosts},{isDeleted: true},{new: true})
 
     //return the updated user document
     return res.send({status: true, data: updatedUser})
+
+
 }
 
 module.exports.createUser = createUser;
