@@ -36,7 +36,7 @@ router.delete('/delete/:blogId',  midAuth.authentication,     midAuth.authorizat
 
 
 // Sixth router for deleting blogs using query params------
-router.delete('/deletequery',   midAuth.authentication,      blogController.DeleteByQuery)   // midAuth.authorisebyquery, 
+router.delete('/deletequery',   midAuth.authentication,      blogController.DeleteByQuery)   // midAuth.authorisebyquery., 
 
 
 module.exports = router;
