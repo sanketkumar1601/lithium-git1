@@ -3,6 +3,7 @@ const blogModel = require('../model/blogmodel')                 // Importing blo
 
 const mongoose = require('mongoose')
 const { isValidObjectId } = require("mongoose");                // Inbuilt function of mongoose to check any id is valid object id or not
+const blogmodel = require('../model/blogmodel');
 
 
 //2nd- post API------------------------------------------------------------------------------------------------
@@ -139,31 +140,31 @@ const updateAllBlogs = async function (req, res) {
 
 // 5th- DELETE /blogs/:blogId--------------------------------------------------------------------------------
 
-const deleteBlog = async function (req, res) {
-    try {
-        const blogId = req.params.blogId
+// const deleteBlog = async function (req, res) {
+//     try {
+//         const blogId = req.params.blogId
 
 
-        if (!isValidObjectId(blogId)) {
-            res.status(400).send({ msg: "invalid blogId" })
-        }
+//         if (!isValidObjectId(blogId)) {
+//             res.status(400).send({ msg: "invalid blogId" })
+//         }
 
-        let blog = await blogModel.find({ isDeleted: false, _id: blogId })
+//         let blog = await blogModel.find({ isDeleted: false, _id: blogId })
 
-        if (!blog) {
-            return res.status(400).send({ status: false, msg: "Blog not found" })
-        }
+//         if (!blog) {
+//             return res.status(400).send({ status: false, msg: "Blog not found" })
+//         }
 
 
-        // beFore updating we pass the conditions that data should not be deleted and returning the updated data using new:true.
-        let deletddata = await blogModel.findOneAndUpdate({ isDeleted: false, _id: blogId }, { isDeleted: true, deletedAt : new Date(Date.now()) }, { new: true })
+//         // beFore updating we pass the conditions that data should not be deleted and returning the updated data using new:true.
+//         let deletddata = await blogModel.findOneAndUpdate({ isDeleted: false, _id: blogId }, { isDeleted: true, deletedAt : new Date(Date.now()) }, { new: true })
 
-        res.status(201).send({ status : true , Refrence:deletddata , Message: "Deleted successfully!!"})
-    }
-    catch (err) {
-        res.status(500).send({status: false, msg: err.message })
-    }
-}
+//         res.status(201).send({ status : true , Refrence:deletddata , Message: "Deleted successfully!!"})
+//     }
+//     catch (err) {
+//         res.status(500).send({status: false, msg: err.message })
+//     }
+// }
 
 
 
@@ -208,6 +209,15 @@ const DeleteByQuery = async function (req, res) {
     }
 }
 
+
+let deletedeta = async function (req,res){
+   let  deta = req.params.blogId
+    
+   let update1 =await blogmodel.findByIdAndUpdate({_id:blogId},{$set:{isDeleted:true}},{new:true})
+     
+
+
+}
 
 // Exporting all the functions from here -------------------------------------------------------------
 
